@@ -128,3 +128,28 @@ class DevicePoint():
     @property
     def raw(self) -> dict:
         return self.raw_data
+
+    @property
+    def max_value(self) -> int | float | None:
+        return self.raw_data["maxValue"]
+
+    @property
+    def min_value(self) -> int | float | None:
+        return self.raw_data["minValue"]
+
+    @property
+    def scale_value(self) -> float | None:
+        if self.raw_data["scaleValue"] is not None:
+            return float(self.raw_data["scaleValue"])
+
+    @property
+    def step_value(self) -> int | float | None:
+        return self.raw_data["minValue"]
+
+    @property
+    def zone_id(self) -> str | None:
+        return self.raw_data["zoneId"]
+
+    @property
+    def smart_home_categories(self) -> dict:
+        return self.raw_data["smartHomeCategories"]
