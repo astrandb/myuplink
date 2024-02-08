@@ -1,3 +1,5 @@
+""" Auth class for myuplink."""
+
 from .auth_abstract import AbstractAuth
 from aiohttp import ClientSession
 

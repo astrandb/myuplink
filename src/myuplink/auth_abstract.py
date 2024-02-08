@@ -1,3 +1,5 @@
+"""Abstract auth class."""
+
 from abc import ABC, abstractmethod
 from aiohttp import ClientSession, ClientResponse
 
