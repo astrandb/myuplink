@@ -1,7 +1,9 @@
+"""Data model classes for myuplink API."""
+
+from __future__ import annotations
 from typing import List
 
-from .auth import Auth
-
+MARKER_FOR_UNKNOWN_VALUE = -32768
 class SystemDevice():
 
     def __init__(self, raw_data: dict):
@@ -32,12 +34,12 @@ class System():
     @property
     def name(self) -> str:
         """Return the name of the system."""
-        return self.raw_data["name"]       
+        return self.raw_data["name"]
 
     @property
     def hasAlarm(self) -> bool:
         """Return if the system has alarm."""
-        return self.raw_data["hasAlarm"]      
+        return self.raw_data["hasAlarm"]
 
     @property
     def devices(self) -> List[SystemDevice]:
@@ -72,12 +74,12 @@ class Device():
     @property
     def firmwareCurrent(self) -> str:
         """Return the current firmware version."""
-        return self.raw_data["firmware"]["currentFwVersion"]        
+        return self.raw_data["firmware"]["currentFwVersion"]
 
     @property
     def firmwareDesired(self) -> str:
         """Return the desired firmware version."""
-        return self.raw_data["firmware"]["desiredFwVersion"]       
+        return self.raw_data["firmware"]["desiredFwVersion"]
 
     @property
     def connectionState(self) -> str:
@@ -115,11 +117,13 @@ class DevicePoint():
         return self.raw_data["timestamp"]
 
     @property
-    def value(self):
+    def value(self) -> int | float | str | None:
+        if self.raw_data["value"] == MARKER_FOR_UNKNOWN_VALUE:
+            return None
         return self.raw_data["value"]
-    
+
     @property
-    def enum_values(self):
+    def enum_values(self) -> dict:
         return self.raw_data["enumValues"]
 
     @property
@@ -129,4 +133,28 @@ class DevicePoint():
     @property
     def raw(self) -> dict:
         return self.raw_data
-    
+
+    @property
+    def max_value(self) -> int | float | None:
+        return self.raw_data["maxValue"]
+
+    @property
+    def min_value(self) -> int | float | None:
+        return self.raw_data["minValue"]
+
+    @property
+    def scale_value(self) -> float | None:
+        if self.raw_data["scaleValue"] is not None:
+            return float(self.raw_data["scaleValue"])
+
+    @property
+    def step_value(self) -> int | float | None:
+        return self.raw_data["minValue"]
+
+    @property
+    def zone_id(self) -> str | None:
+        return self.raw_data["zoneId"]
+
+    @property
+    def smart_home_categories(self) -> dict:
+        return self.raw_data["smartHomeCategories"]
