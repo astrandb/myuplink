@@ -53,6 +53,16 @@ class SystemDevice:
     def current_fw_version(self) -> str:
         """Return the current firmware version."""
         return self.raw_data["currentFwVersion"]
+    
+    @property
+    def connection_state(self) -> str:
+        """Return the connection state."""
+        return self.raw_data["connectionState"]
+    
+    @property
+    def device_type(self) -> str:
+        """Return the device type."""
+        return self.raw_data["deviceType"]
 
     @property
     def raw(self) -> dict:
